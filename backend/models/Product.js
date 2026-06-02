@@ -21,6 +21,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    lowStockLimit: {
+        type: Number,
+        default: 10,
+        min: 0,
+    },
     supplier: {
       type: String,
     },
