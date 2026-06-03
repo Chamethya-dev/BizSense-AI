@@ -184,3 +184,33 @@ exports.getTopSellingProducts = async (req, res) => {
     });
   }
 };
+
+// Delete sale
+exports.deleteSale = async (req, res) => {
+  try {
+    const sale = await Sale.findOne({
+      _id: req.params.id,
+      user: req.user.id,
+    });
+
+    if (!sale) {
+      return res.status(404).json({
+        success: false,
+        message: "Sale not found",
+      });
+    }
+
+    await Sale.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Sale deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error deleting sale",
+      error: error.message,
+    });
+  }
+};
