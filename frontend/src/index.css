@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card {
+    @apply bg-surface border border-surface-border rounded-2xl shadow-lg;
+  }
+
+  .card-hover {
+    @apply hover:border-electric/30 transition-all duration-200;
+  }
+
+  .stat-number {
+    @apply text-2xl font-bold text-white;
+  }
+
+  .shimmer {
+    @apply bg-surface-overlay animate-pulse;
+  }
+
+  .table-header {
+    @apply text-xs uppercase tracking-wider text-white/40 font-semibold;
+  }
+
+  .table-cell {
+    @apply text-sm text-white/80;
+  }
+
+  .badge-blue {
+    @apply px-2 py-1 rounded-full text-xs bg-electric/10 text-electric border border-electric/20;
+  }
+}
+
+body {
+  @apply bg-ink-950 text-white;
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+}
