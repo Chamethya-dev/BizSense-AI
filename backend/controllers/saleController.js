@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 // Record a new sale
 exports.recordSale = async (req, res) => {
   try {
-    const { products } = req.body;
+    const { products, customer } = req.body;
 
     if (!products || products.length === 0) {
       return res.status(400).json({
@@ -16,6 +16,7 @@ exports.recordSale = async (req, res) => {
 
     let saleItems = [];
     let totalAmount = 0;
+    let totalProfit = 0;
 
     for (const item of products) {
       const { productId, quantity } = item;
@@ -40,16 +41,20 @@ exports.recordSale = async (req, res) => {
       }
 
       const subtotal = product.price * quantity;
+      const profit = (product.price - product.costPrice) * quantity;
 
       saleItems.push({
         product: product._id,
         name: product.name,
         quantity,
         price: product.price,
+        costPrice: product.costPrice,
         subtotal,
+        profit,
       });
 
       totalAmount += subtotal;
+      totalProfit += profit;
 
       product.quantity -= quantity;
       await product.save();
@@ -59,6 +64,8 @@ exports.recordSale = async (req, res) => {
       user: req.user.id,
       products: saleItems,
       totalAmount,
+      totalProfit,
+      customer,
     });
 
     res.status(201).json({
@@ -78,7 +85,9 @@ exports.recordSale = async (req, res) => {
 // Get sales history
 exports.getSalesHistory = async (req, res) => {
   try {
-    const sales = await Sale.find({ user: req.user.id }).sort({ createdAt: -1 });
+    const sales = await Sale.find({ user: req.user.id })
+      .populate("customer", "name email")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -100,13 +109,14 @@ exports.getSalesStats = async (req, res) => {
     const stats = await Sale.aggregate([
       {
         $match: {
-            user: new mongoose.Types.ObjectId(req.user.id),
+          user: new mongoose.Types.ObjectId(req.user.id),
         },
       },
       {
         $group: {
           _id: null,
           totalSalesAmount: { $sum: "$totalAmount" },
+          totalProfit: { $sum: "$totalProfit" },
           totalSalesCount: { $sum: 1 },
           averageSaleAmount: { $avg: "$totalAmount" },
         },
@@ -117,6 +127,7 @@ exports.getSalesStats = async (req, res) => {
       success: true,
       stats: stats[0] || {
         totalSalesAmount: 0,
+        totalProfit: 0,
         totalSalesCount: 0,
         averageSaleAmount: 0,
       },
@@ -136,7 +147,7 @@ exports.getTopSellingProducts = async (req, res) => {
     const topProducts = await Sale.aggregate([
       {
         $match: {
-            user: new mongoose.Types.ObjectId(req.user.id),
+          user: new mongoose.Types.ObjectId(req.user.id),
         },
       },
       {
@@ -148,6 +159,7 @@ exports.getTopSellingProducts = async (req, res) => {
           name: { $first: "$products.name" },
           totalQuantitySold: { $sum: "$products.quantity" },
           totalRevenue: { $sum: "$products.subtotal" },
+          totalProfit: { $sum: "$products.profit" },
         },
       },
       {

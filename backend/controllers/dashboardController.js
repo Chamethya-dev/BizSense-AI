@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const Sale = require("../models/Sale");
+const Customer = require("../models/Customer");
 const mongoose = require("mongoose");
 
 // Dashboard Summary
@@ -540,6 +541,276 @@ exports.getCategoryPerformance = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error fetching category performance",
+      error: error.message,
+    });
+  }
+};
+
+// Top Customers Analytics
+exports.getTopCustomers = async (req, res) => {
+  try {
+    const topCustomers = await Sale.aggregate([
+      {
+        $match: {
+          user: new mongoose.Types.ObjectId(req.user.id),
+          customer: { $ne: null },
+        },
+      },
+      {
+        $group: {
+          _id: "$customer",
+          totalSpent: {
+            $sum: "$totalAmount",
+          },
+          totalOrders: {
+            $sum: 1,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "customers",
+          localField: "_id",
+          foreignField: "_id",
+          as: "customerInfo",
+        },
+      },
+      {
+        $unwind: "$customerInfo",
+      },
+      {
+        $project: {
+          _id: 0,
+          customerId: "$customerInfo._id",
+          name: "$customerInfo.name",
+          email: "$customerInfo.email",
+          totalSpent: 1,
+          totalOrders: 1,
+        },
+      },
+      {
+        $sort: {
+          totalSpent: -1,
+        },
+      },
+      {
+        $limit: 5,
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      topCustomers,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching top customers",
+      error: error.message,
+    });
+  }
+};
+
+// Profit Analytics
+exports.getProfitAnalytics = async (req, res) => {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.user.id);
+
+    const profitData = await Sale.aggregate([
+      {
+        $match: {
+          user: userId,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: "$totalAmount" },
+          totalProfit: { $sum: "$totalProfit" },
+          totalSales: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          totalRevenue: 1,
+          totalProfit: 1,
+          totalSales: 1,
+          totalCost: {
+            $subtract: ["$totalRevenue", "$totalProfit"],
+          },
+          profitMargin: {
+            $round: [
+              {
+                $cond: [
+                  { $eq: ["$totalRevenue", 0] },
+                  0,
+                  {
+                    $multiply: [
+                      { $divide: ["$totalProfit", "$totalRevenue"] },
+                      100,
+                    ],
+                  },
+                ],
+              },
+              2,
+            ],
+          },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      profitAnalytics: profitData[0] || {
+        totalRevenue: 0,
+        totalProfit: 0,
+        totalSales: 0,
+        totalCost: 0,
+        profitMargin: 0,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching profit analytics",
+      error: error.message,
+    });
+  }
+};
+
+// Customer Lifetime Value Analytics
+exports.getCustomerLifetimeValue = async (req, res) => {
+  try {
+    const clvData = await Sale.aggregate([
+      {
+        $match: {
+          user: new mongoose.Types.ObjectId(req.user.id),
+          customer: { $ne: null },
+        },
+      },
+      {
+        $group: {
+          _id: "$customer",
+          totalSpent: {
+            $sum: "$totalAmount",
+          },
+          totalOrders: {
+            $sum: 1,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "customers",
+          localField: "_id",
+          foreignField: "_id",
+          as: "customerInfo",
+        },
+      },
+      {
+        $unwind: "$customerInfo",
+      },
+      {
+        $project: {
+          _id: 0,
+          customerId: "$customerInfo._id",
+          name: "$customerInfo.name",
+          email: "$customerInfo.email",
+          totalSpent: 1,
+          totalOrders: 1,
+          averageOrderValue: {
+            $round: [
+              {
+                $divide: [
+                  "$totalSpent",
+                  "$totalOrders"
+                ]
+              },
+              2
+            ]
+          }
+        }
+      },
+      {
+        $sort: {
+          totalSpent: -1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      customers: clvData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching customer lifetime value",
+      error: error.message,
+    });
+  }
+};
+
+// Recent Activity Feed
+exports.getRecentActivityFeed = async (req, res) => {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.user.id);
+
+    const recentSales = await Sale.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("products totalAmount createdAt");
+
+    const recentProducts = await Product.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("name quantity createdAt");
+
+    const recentCustomers = await Customer.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("name createdAt");
+
+    const salesActivities = recentSales.map((sale) => ({
+      type: "sale",
+      title: "Sale Recorded",
+      message: `${sale.products[0]?.name || "Product"} sold for Rs. ${
+        sale.totalAmount
+      }`,
+      date: sale.createdAt,
+    }));
+
+    const productActivities = recentProducts.map((product) => ({
+      type: "product",
+      title: "Product Added",
+      message: `${product.name} added to inventory with quantity ${product.quantity}`,
+      date: product.createdAt,
+    }));
+
+    const customerActivities = recentCustomers.map((customer) => ({
+      type: "customer",
+      title: "Customer Added",
+      message: `${customer.name} added to customer database`,
+      date: customer.createdAt,
+    }));
+
+    const activities = [
+      ...salesActivities,
+      ...productActivities,
+      ...customerActivities,
+    ]
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 10);
+
+    res.status(200).json({
+      success: true,
+      activities,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching recent activity feed",
       error: error.message,
     });
   }

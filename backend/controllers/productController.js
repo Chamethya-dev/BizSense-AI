@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 // Add product
 exports.addProduct = async (req, res) => {
   try {
-    const { name, category, price, quantity, supplier, lowStockLimit } = req.body;
+    const { name, category, price, quantity, supplier, lowStockLimit, costPrice } = req.body;
 
     const product = await Product.create({
       name,
@@ -12,6 +12,7 @@ exports.addProduct = async (req, res) => {
       quantity,
       supplier,
       lowStockLimit,
+      costPrice,
       user: req.user.id,
     });
 

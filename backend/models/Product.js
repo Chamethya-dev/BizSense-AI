@@ -11,6 +11,11 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    costPrice: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
     price: {
       type: Number,
       required: true,

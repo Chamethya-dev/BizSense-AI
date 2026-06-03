@@ -23,6 +23,14 @@ const saleItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  costPrice: {
+  type: Number,
+  required: true,
+  },
+  profit: {
+  type: Number,
+  required: true,
+  },
 });
 
 const saleSchema = new mongoose.Schema(
@@ -32,10 +40,23 @@ const saleSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+    // ADD THIS HERE
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
+    },
+
     products: [saleItemSchema],
+
     totalAmount: {
       type: Number,
       required: true,
+    },
+    totalProfit: {
+    type: Number,
+    required: true,
+    default: 0,
     },
   },
   { timestamps: true }
