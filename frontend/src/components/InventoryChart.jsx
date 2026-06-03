@@ -6,8 +6,8 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 const PALETTE = ['#6EE7FF', '#34D399', '#FBBF24', '#F87171', '#A78BFA', '#FB923C', '#38BDF8', '#4ADE80']
 
 export default function InventoryChart({ data = [], loading = false }) {
-  const labels = data.map(d => d.category || d.name || d.label || '')
-  const values = data.map(d => d.value || d.count || d.total || 0)
+  const labels = data.map(d => d.category || d._id || d.name || d.label || '')
+  const values = data.map(d => d.totalValue || d.value || d.count || d.total || 0)
 
   const chartData = {
     labels,

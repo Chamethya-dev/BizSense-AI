@@ -7,8 +7,8 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 export default function SalesTrendChart({ data = [], loading = false }) {
-  const labels = data.map(d => d.date || d.month || d.label || '')
-  const values = data.map(d => d.sales || d.count || d.value || 0)
+  const labels = data.map(d => d.date || d._id?.day || d.month || d.label || '')
+  const values = data.map(d => d.salesCount || d.sales || d.count || d.value || 0)
 
   const chartData = {
     labels,

@@ -8,7 +8,7 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 export default function RevenueChart({ data = [], loading = false }) {
-  const labels = data.map(d => d.month || d.label || '')
+  const labels = data.map(d => d.month || d._id?.month || d.label || '')
   const values = data.map(d => d.revenue || d.value || 0)
 
   const chartData = {
