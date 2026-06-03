@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = useCallback(async (email, password) => {
-    const { data } = await API.post('/api/auth/login', { email, password })
+    const { data } = await API.post('/auth/login', { email, password })
     localStorage.setItem('bizsense_token', data.token)
     localStorage.setItem('bizsense_user', JSON.stringify(data.user || { email }))
     setUser(data.user || { email })
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   const register = useCallback(async (name, email, password) => {
-    const { data } = await API.post('/api/auth/register', { name, email, password })
+    const { data } = await API.post('/auth/register', { name, email, password })
     localStorage.setItem('bizsense_token', data.token)
     localStorage.setItem('bizsense_user', JSON.stringify(data.user || { name, email }))
     setUser(data.user || { name, email })
