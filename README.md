@@ -6,6 +6,18 @@ The platform helps businesses manage inventory, track sales, manage customer rel
 
 ---
 
+## Project Overview
+
+BizSense AI is a full-stack Business Intelligence and Operations Management platform built for small and medium-sized businesses.
+
+The system enables businesses to manage inventory, customers, and sales while transforming operational data into actionable insights through analytics and AI-powered recommendations.
+
+Unlike traditional inventory systems, BizSense AI combines operational management with business intelligence, allowing users to monitor performance, identify trends, evaluate business health, and make data-driven decisions.
+
+The project demonstrates Full-Stack Development, Business Analytics, Data Engineering fundamentals, Cloud Deployment, and AI-driven insight generation.
+
+---
+
 ## Live Demo
 
 ### Frontend
@@ -116,6 +128,31 @@ https://bizsense-ai-production.up.railway.app
 
 * AI Business Insights
 * Smart Business Recommendations
+* Inventory Alerts
+* Sales Performance Recommendations
+* Customer Behavior Insights
+
+---
+
+## Demo Dataset
+
+The deployed version currently contains realistic business data for demonstration purposes.
+
+| Dataset   | Records |
+| --------- | ------- |
+| Products  | 15      |
+| Customers | 14      |
+| Sales     | 300     |
+
+The dataset is used to demonstrate:
+
+* Revenue Analytics
+* Profit Analysis
+* Customer Lifetime Value
+* Top Customer Identification
+* Inventory Intelligence
+* AI Business Recommendations
+* Business Health Scoring
 
 ---
 
@@ -346,20 +383,20 @@ npm run dev
 
 ---
 
-### Current State
+## Current State
 
 The application is fully functional and deployed.
 
 Users can:
 
-* Register and login
-* Manage inventory
-* Manage customers
-* Record sales
-* Track revenue and profit
-* View analytics dashboards
-* Receive AI-generated business insights
-* Monitor business health
+* Register and Login
+* Manage Inventory
+* Manage Customers
+* Record Sales
+* Track Revenue and Profit
+* View Analytics Dashboards
+* Receive AI-Generated Business Insights
+* Monitor Business Health
 
 ---
 
@@ -391,19 +428,74 @@ Users can:
 
 ---
 
-## Future Enhancements
+## Skills Demonstrated
+
+### Software Engineering
+
+* REST API Development
+* Authentication & Authorization
+* MVC Architecture
+* Backend Development
+* Frontend Development
+* Database Design
+
+### Data & Analytics
+
+* Business Intelligence
+* Revenue Analytics
+* Profit Analytics
+* Customer Analytics
+* Inventory Analytics
+* KPI Tracking
+
+### Technologies
+
+* React.js
+* Node.js
+* Express.js
+* MongoDB
+* JWT Authentication
+* Railway
+* Vercel
+
+---
+
+## Future Enhancements & Data Science Roadmap
+
+### Business Forecasting
+
+* Revenue Forecasting using Machine Learning
+* Monthly Sales Prediction
+* Demand Forecasting
+* Inventory Consumption Forecasting
+
+### Customer Intelligence
+
+* Customer Segmentation
+* Customer Churn Prediction
+* Customer Value Classification
+* Personalized Customer Recommendations
+
+### Advanced AI Features
+
+* AI Business Assistant
+* Natural Language Business Queries
+* OpenAI / Gemini Integration
+* Automated Insight Generation
+
+### Reporting & Automation
+
+* PDF Report Generation
+* CSV / Excel Export
+* Automated Weekly Reports
+* Email Notifications
+
+### Enterprise Features
 
 * Role-Based Access Control
 * Multi-Business Support
-* Email Notifications
-* Forecasting & Demand Prediction
-* PDF Report Generation
-* Export Analytics (CSV/PDF)
-* OpenAI/Gemini Integration
-* Inventory Forecasting
-* AI Sales Prediction
-* Supplier Management Module
-* Invoice Generation
+* Supplier Management
+* Invoice Management
 
 ---
 
