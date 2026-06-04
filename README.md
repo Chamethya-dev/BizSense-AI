@@ -402,30 +402,55 @@ Users can:
 
 ## Screenshots
 
-### Dashboard
+### Dashboard Overview
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard Overview](screenshots/dashboard-overview.png)
 
-### Products Module
+### Dashboard Analytics
+
+![Dashboard Analytics](screenshots/dashboard-analytics.png)
+
+---
+
+### Product Management
 
 ![Products](screenshots/products.png)
 
-### Customers Module
+---
+
+### Customer Management
 
 ![Customers](screenshots/customers.png)
 
-### Sales Module
+---
+
+### Sales Management
 
 ![Sales](screenshots/sales.png)
 
-### Analytics Dashboard
+---
 
-![Analytics](screenshots/analytics.png)
+### Business Analytics Overview
 
-### AI Insights
+![Analytics Overview](screenshots/analytics-overview.png)
 
-![AI Insights](screenshots/ai-insights.png)
+### Revenue & Inventory Analytics
 
+![Analytics Charts](screenshots/analytics-charts.png)
+
+---
+
+### AI Insights Dashboard
+
+![AI Insights Overview](screenshots/ai-insights-overview.png)
+
+### Customer Intelligence
+
+![Customer Intelligence](screenshots/ai-insights-customer-analysis.png)
+
+### Category Performance Analytics
+
+![Category Performance](screenshots/ai-insights-category-performance.png)
 ---
 
 ## Skills Demonstrated
