@@ -3,7 +3,7 @@ import api from "../api/axios";
 
 import DashboardCard from "../components/DashboardCard";
 import RevenueChart from "../components/RevenueChart";
-import SalesTrendChart from "../components/SalesTrendchart";
+import SalesTrendChart from "../components/SalesTrendChart";
 import InventoryChart from "../components/InventoryChart";
 import ActivityFeed from "../components/ActivityFeed";
 import ProductTable from "../components/ProductTable";
