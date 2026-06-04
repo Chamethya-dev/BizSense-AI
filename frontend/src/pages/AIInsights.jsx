@@ -51,6 +51,10 @@ const AIInsights = () => {
 
       setRecommendations(recommendationsRes.data.recommendations || []);
       setCategoryPerformance(categoryRes.data.categoryPerformance || []);
+      console.log(
+  "CATEGORY PERFORMANCE DATA:",
+  categoryRes.data.categoryPerformance
+);
       setTopCustomers(customersRes.data.topCustomers || []);
       setClv(clvRes.data.customers || []);
     } catch (error) {
@@ -224,7 +228,7 @@ const AIInsights = () => {
                       {formatCurrency(cat.totalRevenue)}
                     </td>
                     <td className="py-4">{cat.totalSales || 0}</td>
-                    <td className="py-4">{cat.totalQuantity || 0}</td>
+                    <td className="py-4">{cat.totalUnitsSold || 0}</td>
                   </tr>
                 ))
               ) : (
