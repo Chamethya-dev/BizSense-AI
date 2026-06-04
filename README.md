@@ -6,6 +6,34 @@ The platform helps businesses manage inventory, track sales, manage customer rel
 
 ---
 
+## Live Demo
+
+### Frontend
+
+https://biz-sense-ai.vercel.app
+
+### Backend API
+
+https://bizsense-ai-production.up.railway.app
+
+---
+
+## Deployment
+
+### Frontend
+
+* Vercel
+
+### Backend
+
+* Railway
+
+### Database
+
+* MongoDB Atlas
+
+---
+
 ## Features
 
 ### Authentication & Security
@@ -93,6 +121,16 @@ The platform helps businesses manage inventory, track sales, manage customer rel
 
 ## Technology Stack
 
+### Frontend
+
+* React.js
+* Vite
+* Tailwind CSS
+* Axios
+* React Router DOM
+* Recharts
+* Lucide React
+
 ### Backend
 
 * Node.js
@@ -111,6 +149,11 @@ The platform helps businesses manage inventory, track sales, manage customer rel
 ### API Testing
 
 * Postman
+
+### Deployment
+
+* Vercel
+* Railway
 
 ---
 
@@ -144,6 +187,19 @@ backend/
 │
 ├── server.js
 └── .env
+
+frontend/
+│
+├── src/
+│   ├── pages/
+│   ├── components/
+│   ├── routes/
+│   ├── context/
+│   └── layouts/
+│
+├── App.jsx
+├── main.jsx
+└── .env
 ```
 
 ---
@@ -157,8 +213,6 @@ backend/
 | POST   | /api/auth/register |
 | POST   | /api/auth/login    |
 
----
-
 ### Products
 
 | Method | Endpoint          |
@@ -167,8 +221,6 @@ backend/
 | GET    | /api/products     |
 | PUT    | /api/products/:id |
 | DELETE | /api/products/:id |
-
----
 
 ### Customers
 
@@ -180,8 +232,6 @@ backend/
 | PUT    | /api/customers/:id |
 | DELETE | /api/customers/:id |
 
----
-
 ### Sales
 
 | Method | Endpoint                |
@@ -190,8 +240,6 @@ backend/
 | GET    | /api/sales              |
 | GET    | /api/sales/stats        |
 | GET    | /api/sales/top-products |
-
----
 
 ### Dashboard Analytics
 
@@ -217,48 +265,52 @@ backend/
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Chamethya-dev/BizSense-AI.git
 ```
 
-### Navigate to Backend
+### Backend Setup
 
 ```bash
 cd backend
-```
-
-### Install Dependencies
-
-```bash
 npm install
 ```
-
-### Configure Environment Variables
 
 Create a `.env` file:
 
 ```env
 PORT=5000
-
 MONGO_URI=your_mongodb_connection_string
-
 JWT_SECRET=your_secret_key
 ```
 
-### Start Development Server
+Run Backend:
 
 ```bash
 npm run dev
 ```
 
-### Start Production Server
+### Frontend Setup
 
 ```bash
-npm start
+cd frontend
+npm install
+```
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+Run Frontend:
+
+```bash
+npm run dev
 ```
 
 ---
 
-## Current Development Status
+## Project Status
 
 ### Completed Modules
 
@@ -284,20 +336,62 @@ npm start
 
 ✅ Activity Tracking Module
 
+✅ React Frontend Dashboard
+
+✅ Railway Backend Deployment
+
+✅ Vercel Frontend Deployment
+
+✅ MongoDB Atlas Integration
+
 ---
 
-## Upcoming Features
+### Current State
 
-### Frontend Development
+The application is fully functional and deployed.
 
-* React Dashboard
-* Inventory Management UI
-* Sales Management UI
-* Customer Management UI
-* Analytics Dashboard
-* Business Intelligence Dashboard
+Users can:
 
-### Future SaaS Enhancements
+* Register and login
+* Manage inventory
+* Manage customers
+* Record sales
+* Track revenue and profit
+* View analytics dashboards
+* Receive AI-generated business insights
+* Monitor business health
+
+---
+
+## Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Products Module
+
+![Products](screenshots/products.png)
+
+### Customers Module
+
+![Customers](screenshots/customers.png)
+
+### Sales Module
+
+![Sales](screenshots/sales.png)
+
+### Analytics Dashboard
+
+![Analytics](screenshots/analytics.png)
+
+### AI Insights
+
+![AI Insights](screenshots/ai-insights.png)
+
+---
+
+## Future Enhancements
 
 * Role-Based Access Control
 * Multi-Business Support
@@ -305,8 +399,11 @@ npm start
 * Forecasting & Demand Prediction
 * PDF Report Generation
 * Export Analytics (CSV/PDF)
-* Real AI Integration (OpenAI/Gemini)
-* Cloud Deployment
+* OpenAI/Gemini Integration
+* Inventory Forecasting
+* AI Sales Prediction
+* Supplier Management Module
+* Invoice Generation
 
 ---
 
@@ -317,3 +414,12 @@ Chamethya Palliyaguru
 BSc (Hons) Data Science Undergraduate
 
 SLIIT – Sri Lanka Institute of Information Technology
+
+GitHub:
+https://github.com/Chamethya-dev
+
+---
+
+## License
+
+This project was developed for educational and portfolio purposes.
